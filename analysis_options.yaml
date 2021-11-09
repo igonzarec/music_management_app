@@ -4,6 +4,8 @@ analyzer:
   errors:
     missing_return: error
     use_key_in_widget_constructors: ignore
+    use_rethrow_when_possible: ignore
+    avoid_print: ignore
     # must_be_immutable: error #non final fields should be error
     # must_call_super: error
     # invalid_use_of_protected_member: error

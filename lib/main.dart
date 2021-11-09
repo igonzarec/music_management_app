@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:music_management_app/search_artists/infrastructure/last_fm_albums_repository.dart';
 
-void main() => runApp(MyApp());
+void main() async {
 
-class MyApp extends StatelessWidget {
+  LastFmArtistsRepository().getArtists("avril", 1, 30);
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Future<void> getArtistsByName() async {}
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
       title: 'Material App',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Material App Bar'),
+          title: const Text('Material App Bar'),
         ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
-          ),
+        body: const Center(
+          child: Text('Hello World'),
         ),
       ),
     );
