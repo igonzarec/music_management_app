@@ -2,31 +2,30 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:music_management_app/core/domain/models/last_fm_error.dart';
 import 'package:music_management_app/core/infrastructure/last_fm_client.dart';
-import 'package:music_management_app/search_artists/domain/models/last_fm_artist.dart';
 
-class LastFmArtistsRepository {
+class LastFmNetworkTracksRepository {
   final LastFmClient _lastFmClient = LastFmClient();
 
-  Future<List<LastFmArtist>> getArtists(
-      String artist, int page, int limit) async {
-    Map<String, dynamic> searchArtistParams = {
-      "method": "artist.search",
+  Future<List<String>> getTracks(String artist, String album) async {
+    List<String> tracks = [];
+
+    Map<String, dynamic> getAlbumsTracks = {
+      "method": "album.getinfo",
       "artist": artist,
-      "page": page,
-      "limit": limit,
+      "album": album,
     };
 
-    List<LastFmArtist> artists = [];
-
     try {
-      var response =
-          await _lastFmClient.get(queryParameters: searchArtistParams);
+      final response =
+          await _lastFmClient.get(queryParameters: getAlbumsTracks);
 
+      //TODO: improve response handling
       if (response.statusCode == 200) {
-        final userdata =
-            (response.data["results"]["artistmatches"]["artist"] as List);
+        final tracksData = (response.data['album']['tracks']['track'] as List);
 
-        artists = userdata.map((e) => LastFmArtist.fromMap(e)).toList();
+        tracks = tracksData.map((e) {
+          return e["name"].toString();
+        }).toList();
       }
     } on DioError catch (e) {
       if (e.response?.statusCode == 403) {
@@ -36,6 +35,6 @@ class LastFmArtistsRepository {
         // throw e;
       }
     }
-    return artists;
+    return tracks;
   }
 }
