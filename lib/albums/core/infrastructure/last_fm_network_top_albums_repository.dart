@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:music_management_app/albums/core/domain/last_fm_album_details.dart';
 import 'package:music_management_app/core/domain/models/last_fm_error.dart';

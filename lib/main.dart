@@ -1,23 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:music_management_app/albums/core/infrastructure/last_fm_network_top_albums_repository.dart';
-import 'package:music_management_app/albums/core/infrastructure/last_fm_network_tracks_repository.dart';
-import 'package:music_management_app/search_artists/infrastructure/last_fm_artists_repository.dart';
+import 'dart:async';
 
 void main() async {
-  ///get artists
-  // LastFmArtistsRepository().getArtists("avril", 1, 30);
-  ///get albums
-  // LastFmNetworkTopAlbumsRepository()
-  //     .getTopAlbums("Linkin Park")
-  //     .then((value) => value.forEach((element) {
-  //           print(element?.name);
-  //         }));
-  ///get tracks
-  // LastFmNetworkTracksRepository()
-  //     .getTracks("linkin park", "meteora")
-  //     .then((value) => value.forEach((element) {
-  //           print(element);
-  //         }));
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
 }
 
