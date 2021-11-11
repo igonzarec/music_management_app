@@ -12,7 +12,8 @@ class LastFmNetworkTopAlbumsRepository {
 
     //Expression to avoid albums with "null" word or generic titles, and thus,
     // objects with empty fields.
-    final regexp = RegExp("(\\b(null)\\b)|(\\b(title)\\b)", caseSensitive: false);
+    final regexp =
+        RegExp("(\\b(null)\\b)|(\\b(title)\\b)", caseSensitive: false);
 
     Map<String, dynamic> getTopAlbumsParams = {
       "method": "artist.gettopalbums", //default parameter

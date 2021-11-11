@@ -3,16 +3,16 @@ import 'dart:async';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(MyApp());
+  
+  runApp(MusicManagementApp());
 }
 
-class MyApp extends StatefulWidget {
+class MusicManagementApp extends StatefulWidget {
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MusicManagementApp> createState() => _MusicManagementAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MusicManagementAppState extends State<MusicManagementApp> {
   Future<void> getArtistsByName() async {}
 
   @override

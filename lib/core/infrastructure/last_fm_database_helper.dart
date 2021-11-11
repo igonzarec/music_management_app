@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 
 
 class LastFmDatabaseHelper {
-  static const _likedAlbumsDatabaseName = "last_fm_albums.db7";
+  static const _likedAlbumsDatabaseName = "last_fm_albums.db43";
   static const _likedAlbumsDatabaseVersion = 1;
 
   LastFmDatabaseHelper._();
@@ -22,12 +22,7 @@ class LastFmDatabaseHelper {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _likedAlbumsDatabaseName);
     return await openDatabase(path,
-        version: _likedAlbumsDatabaseVersion, onCreate: _onCreate, onConfigure: _onConfigure);
-  }
-
-  _onConfigure(Database db) async {
-    // Add support for cascade delete
-    await db.execute("PRAGMA foreign_keys = ON");
+        version: _likedAlbumsDatabaseVersion, onCreate: _onCreate);
   }
 
   //Eventually more tables could be created
@@ -38,13 +33,14 @@ class LastFmDatabaseHelper {
             ${LastFmTrackOperations.trackId} INTEGER PRIMARY KEY AUTOINCREMENT,
             ${LastFmTrackOperations.trackName} STRING NOT NULL,
             ${LastFmTrackOperations.FK_track_album} INT NOT NULL,
-            FOREIGN KEY (${LastFmTrackOperations.FK_track_album}) REFERENCES ${LastFmAlbumOperations.albumTable} (${LastFmAlbumOperations.albumId}) 
+            FOREIGN KEY (${LastFmTrackOperations.FK_track_album}) REFERENCES ${LastFmAlbumOperations.albumTable} (${LastFmAlbumOperations.albumId})
           )
           ''');
     //create album table and connect with foreign key to category id
     await db.execute('''
           CREATE TABLE ${LastFmAlbumOperations.albumTable} (
             ${LastFmAlbumOperations.albumId} INTEGER PRIMARY KEY AUTOINCREMENT,
+            ${LastFmAlbumOperations.mbId} INT NOT NULL,
             ${LastFmAlbumOperations.name} STRING NOT NULL,
             ${LastFmAlbumOperations.artist} STRING NOT NULL,
             ${LastFmAlbumOperations.image} STRING NOT NULL

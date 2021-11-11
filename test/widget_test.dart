@@ -13,7 +13,7 @@ import 'package:music_management_app/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(MusicManagementApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
