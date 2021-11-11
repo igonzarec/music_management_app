@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
-import 'package:music_management_app/albums/core/domain/last_fm_db_album.dart';
-import 'package:music_management_app/albums/core/domain/last_fm_db_track.dart';
+import 'package:music_management_app/albums/local_albums/domain/last_fm_db_album.dart';
+import 'package:music_management_app/albums/local_albums/domain/last_fm_db_track.dart';
 import 'package:music_management_app/core/infrastructure/last_fm_database_helper.dart';
 
 class LastFmTrackOperations {
