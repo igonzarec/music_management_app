@@ -1,14 +1,13 @@
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:music_management_app/albums/core/domain/last_fm_album_details.dart';
-import 'package:music_management_app/core/domain/models/last_fm_error.dart';
+import 'package:music_management_app/albums/core/domain/last_fm_top_album.dart';
 import 'package:music_management_app/core/infrastructure/last_fm_client.dart';
 
 class LastFmNetworkTopAlbumsRepository {
   final LastFmClient _lastFmClient = LastFmClient();
 
-  Future<List<LastFmTopAlbumDetails?>> getTopAlbums(String artist) async {
-    List<LastFmTopAlbumDetails?> topAlbums = [];
+  Future<List<LastFmTopAlbum>> getTopAlbums(String artist) async {
+    List<LastFmTopAlbum> topAlbums = [];
 
     //Expression to avoid albums with "null" word or generic titles, and thus,
     // objects with empty fields.
@@ -30,18 +29,41 @@ class LastFmNetworkTopAlbumsRepository {
         //filter out albums with "null" word or generic titles
         for (var album in albumsData) {
           if (regexp.hasMatch(album['name'] as String) == false) {
-            topAlbums.add(LastFmTopAlbumDetails.fromMap(album));
+            topAlbums.add(LastFmTopAlbum.fromMap(album));
           }
         }
       }
     } on DioError catch (e) {
       if (e.response?.statusCode == 403) {
-        var lastFmError = LastFmError.fromJson(e.response?.data);
-        log("${lastFmError.error} : ${lastFmError.message}");
-        // //TODO: handle this error in state functionality, then uncomment next line.
-        // throw e;
+        throw e;
       }
     }
     return topAlbums;
+  }
+
+  Future<LastFmAlbumDetails?> getAlbumDetails(
+      {required String artist, required String album}) async {
+    Map<String, dynamic> getAlbumDetailsParams = {
+      "method": "album.getinfo", //default parameter
+      "artist": artist,
+      "album": album,
+    };
+    final response =
+        await _lastFmClient.get(queryParameters: getAlbumDetailsParams);
+
+    try {
+      if (response.statusCode == 200) {
+        final albumsData = (response.data['album']);
+
+        LastFmAlbumDetails albumDetails =
+            LastFmAlbumDetails.fromMap(albumsData);
+
+        return albumDetails;
+      }
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 403) {
+        throw e;
+      }
+    }
   }
 }

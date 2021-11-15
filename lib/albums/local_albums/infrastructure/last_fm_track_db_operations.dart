@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:music_management_app/albums/local_albums/domain/last_fm_db_album.dart';
-import 'package:music_management_app/albums/local_albums/domain/last_fm_db_track.dart';
+import 'package:music_management_app/albums/local_albums/domain/last_fm_local_album.dart';
+import 'package:music_management_app/albums/local_albums/domain/last_fm_local_track.dart';
 import 'package:music_management_app/core/infrastructure/last_fm_database_helper.dart';
 
 class LastFmTrackOperations {
@@ -15,33 +15,36 @@ class LastFmTrackOperations {
 
   final dbProvider = LastFmDatabaseHelper.instance;
 
-  Future<int> createTrack(LastFmDbTrack track) async {
+  Future<int> createTrack(LastFmLocalTrack track) async {
     final db = await dbProvider.database;
     return await db.insert(trackTable, track.toMap());
   }
 
-  Future<void> deleteFromAlbumFromId(int albumId) async {
+  Future<void> deleteFromAlbumFromId(int? albumId) async {
     final db = await LastFmDatabaseHelper.instance.database;
-    await db.delete(trackTable, where: '$FK_track_album = ?', whereArgs: [albumId]);
+    await db
+        .delete(trackTable, where: '$FK_track_album = ?', whereArgs: [albumId]);
     return;
   }
 
-  Future<List<LastFmDbTrack>> getAllTracks() async {
+  Future<List<LastFmLocalTrack>> getAllTracks() async {
     final db = await dbProvider.database;
     List<Map<String, dynamic>> allRows = await db.query(trackTable);
-    List<LastFmDbTrack> tracks =
-        allRows.map((track) => LastFmDbTrack.fromMap(track)).toList();
+    List<LastFmLocalTrack> tracks =
+        allRows.map((track) => LastFmLocalTrack.fromMap(track)).toList();
     return tracks;
   }
 
-  Future<List<LastFmDbTrack>> getAllTracksFromAlbum(LastFmDbAlbum album) async {
+  Future<List<LastFmLocalTrack>> getAllTracksFromAlbum(
+      LastFmLocalAlbum album) async {
     final db = await dbProvider.database;
     List<Map<String, dynamic>> allRows = await db.rawQuery('''
     SELECT * FROM $trackTable 
     WHERE $trackTable.$FK_track_album = ${album.id}
     ''');
-    List<LastFmDbTrack> tracks =
-        allRows.map((track) => LastFmDbTrack.fromMap(track)).toList();
+    List<LastFmLocalTrack> tracks =
+        allRows.map((track) => LastFmLocalTrack.fromMap(track)).toList();
+
     return tracks;
   }
 }

@@ -1,12 +1,21 @@
-import 'package:dio/dio.dart';
+import 'dart:developer';
 
-//TODO: check if class will be necessary
+import 'package:dio/dio.dart';
+import 'package:music_management_app/core/domain/models/last_fm_error.dart';
+
+
 class LastFmInterceptors extends Interceptor {
 
-  //TODO: implement this class completely
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     //Continue to call the next error interceptor.
+    try {
+      var lastFmError = LastFmError.fromJson(err.response?.data);
+      log("${lastFmError.error} : ${lastFmError.message}");
+    } catch (error) {
+      log(error.toString());
+    }
+
     handler.next(err);
   }
 

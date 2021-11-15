@@ -1,21 +1,20 @@
+import 'package:music_management_app/albums/core/domain/last_fm_album.dart';
 
-class LastFmTopAlbumDetails {
+class LastFmTopAlbum extends LastFmAlbum{
   final String name;
   final String artist;
   final String image; //take third object of list to get an acceptable size
-  final List<String> tracks;
 
-  const LastFmTopAlbumDetails({
+   LastFmTopAlbum({
     required this.name,
     required this.artist,
     required this.image,
-    this.tracks = const [],
   });
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is LastFmTopAlbumDetails &&
+      (other is LastFmTopAlbum &&
           runtimeType == other.runtimeType &&
           name == other.name &&
           artist == other.artist &&
@@ -26,15 +25,19 @@ class LastFmTopAlbumDetails {
 
   @override
   String toString() {
-    return 'LastFmTopAlbumDetails{' ' name: $name,' ' artist: $artist,' ' image: $image,' '}';
+    return 'LastFmTopAlbumDetails{'
+        ' name: $name,'
+        ' artist: $artist,'
+        ' image: $image,'
+        '}';
   }
 
-  LastFmTopAlbumDetails copyWith({
+  LastFmTopAlbum copyWith({
     String? name,
     String? artist,
     String? image,
   }) {
-    return LastFmTopAlbumDetails(
+    return LastFmTopAlbum(
       name: name ?? this.name,
       artist: artist ?? this.artist,
       image: image ?? this.image,
@@ -49,8 +52,8 @@ class LastFmTopAlbumDetails {
     };
   }
 
-  factory LastFmTopAlbumDetails.fromMap(Map<String, dynamic> map) {
-    return LastFmTopAlbumDetails(
+  factory LastFmTopAlbum.fromMap(Map<String, dynamic> map) {
+    return LastFmTopAlbum(
       name: map['name'] as String,
       artist: map['artist']['name'] as String,
       image: map['image'][2]['#text'] as String,

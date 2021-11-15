@@ -19,7 +19,6 @@ class LastFmNetworkTracksRepository {
       final response =
           await _lastFmClient.get(queryParameters: getAlbumsTracks);
 
-      //TODO: improve response handling
       if (response.statusCode == 200) {
         final tracksData = (response.data['album']['tracks']['track'] as List);
 
@@ -31,8 +30,7 @@ class LastFmNetworkTracksRepository {
       if (e.response?.statusCode == 403) {
         var lastFmError = LastFmError.fromJson(e.response?.data);
         log("${lastFmError.error} : ${lastFmError.message}");
-        // //TODO: handle this error in state functionality, then uncomment next line.
-        // throw e;
+        throw e;
       }
     }
     return tracks;
