@@ -1,5 +1,9 @@
+// Package imports:
 import 'package:dio/dio.dart';
+
+// Project imports:
 import 'package:music_management_app/core/infrastructure/last_fm_interceptors.dart';
+
 import 'package:music_management_app/core/shared/client_constants.dart'
     as client_constants;
 

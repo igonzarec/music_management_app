@@ -1,5 +1,10 @@
+// Dart imports:
 import 'dart:developer';
+
+// Package imports:
 import 'package:dio/dio.dart';
+
+// Project imports:
 import 'package:music_management_app/core/domain/models/last_fm_error.dart';
 import 'package:music_management_app/core/infrastructure/last_fm_client.dart';
 

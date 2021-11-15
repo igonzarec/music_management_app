@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:music_management_app/albums/core/domain/last_fm_album.dart';
 
 class LastFmTopAlbum extends LastFmAlbum{

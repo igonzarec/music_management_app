@@ -1,8 +1,11 @@
+// Dart imports:
 import 'dart:developer';
 
+// Package imports:
 import 'package:dio/dio.dart';
-import 'package:music_management_app/core/domain/models/last_fm_error.dart';
 
+// Project imports:
+import 'package:music_management_app/core/domain/models/last_fm_error.dart';
 
 class LastFmInterceptors extends Interceptor {
 

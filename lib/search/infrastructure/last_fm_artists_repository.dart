@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:dio/dio.dart';
+
+// Project imports:
 import 'package:music_management_app/core/infrastructure/last_fm_client.dart';
 import 'package:music_management_app/search/domain/models/last_fm_artist.dart';
 
